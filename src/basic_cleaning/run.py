@@ -39,6 +39,10 @@ def go(args):
     # Convert last review to datetime
     df['last_review'] = pd.to_datetime(df['last_review'])
 
+    # Check that all points are in bounds, geographically.
+    idx = df['longitude'].between(-74.25, -73.50) & df['latitude'].between(40.5, 41.2)
+    df = df[idx].copy()
+
     # Export to csv.
     df.to_csv(args.output_artifact, index=False)
 
